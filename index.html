@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>mpei.fish — архив решённых работ МЭИ</title>
+  <meta name="description" content="Неофициальный студенческий архив: решённые контрольные, типовые расчёты, лабы и билеты МЭИ по семестрам.">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 20'%3E%3Cpath d='M2 10C10 0 24 0 30 10C24 20 10 20 2 10ZM30 10L38 3L36 10L38 17Z' fill='none' stroke='%23ff4d1a' stroke-width='2.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+  <!-- CAD-курсор -->
+  <div class="cad" aria-hidden="true">
+    <span class="cad__h"></span><span class="cad__v"></span>
+    <span class="cad__box"></span>
+    <span class="cad__xy">X 0000 · Y 0000</span>
+  </div>
+
+  <header class="top">
+    <a class="logo" href="#top" aria-label="mpei.fish — на главную">
+      <svg class="logo__fish" viewBox="0 0 40 20" aria-hidden="true"><path d="M2 10 C10 0 24 0 30 10 C24 20 10 20 2 10 Z M30 10 L38 3 L36 10 L38 17 Z"/><circle cx="10" cy="9" r="1.6"/></svg>
+      <span>mpei<b>.</b>fish</span>
+    </a>
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="#semesters">Семестры</a>
+      <a href="#top-subjects">Популярное</a>
+      <a href="#types">Типы работ</a>
+      <a href="#upload">Прислать</a>
+    </nav>
+    <div class="top__right">
+      <span class="led" title="Архив на связи"><i></i>220 V</span>
+      <button class="btn btn--ghost" type="button" data-focus-search>Поиск <kbd>/</kbd></button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__text">
+        <p class="label">§ 00 · Неофициальный архив студентов МЭИ</p>
+        <h1 class="hero__title">
+          <span class="plot">Все решения</span>
+          <span class="plot">МЭИ <em>—</em></span>
+          <span class="plot">по семестрам</span>
+        </h1>
+        <p class="hero__lead">Решённые контрольные, типовые расчёты, лабы, чертежи и билеты с 1 по 11 семестр. Сверь свой ответ и найди, где ошибся.</p>
+
+        <form class="search" role="search" data-search-form>
+          <label class="sr-only" for="q">Поиск по архиву</label>
+          <span class="search__prompt">&gt;_</span>
+          <input id="q" type="search" placeholder="Сопромат, эпюры, вариант 12…" autocomplete="off" minlength="2">
+          <button class="btn btn--signal" type="submit">Найти</button>
+        </form>
+        <div class="search__hints">
+          <span>Часто ищут:</span>
+          <button type="button">Сопромат</button>
+          <button type="button">Термодинамика</button>
+          <button type="button">Детали машин</button>
+          <button type="button">Физика горения</button>
+        </div>
+      </div>
+
+      <!-- Осциллограф -->
+      <figure class="scope" aria-label="Осциллограф: сигнал превращается в рыбу">
+        <div class="scope__bezel">
+          <div class="scope__head">
+            <span>CH1 · MPEI-FISH</span>
+            <span class="scope__mode" data-mode>YT</span>
+          </div>
+          <div class="scope__screen">
+            <canvas id="scope"></canvas>
+            <div class="scope__grat" aria-hidden="true"></div>
+          </div>
+          <div class="scope__foot">
+            <span>f = <b data-freq>50.0</b> Гц</span>
+            <span>U = <b data-amp>2.0</b> В/дел</span>
+            <button type="button" class="scope__btn" data-toggle-mode>XY ⇄ YT</button>
+          </div>
+        </div>
+        <figcaption>Подвигай курсором по экрану · клик — режим XY</figcaption>
+      </figure>
+    </section>
+
+    <!-- Табло со статистикой -->
+    <section class="stats" aria-label="Статистика архива">
+      <div class="stat"><div class="seg" data-stat="files"></div><p>файлов в архиве</p></div>
+      <div class="stat"><div class="seg" data-stat="subjects"></div><p>предметов</p></div>
+      <div class="stat"><div class="seg" data-stat="gb"></div><p>гигабайт решений</p></div>
+      <div class="stat"><div class="seg" data-stat="semesters"></div><p>семестров</p></div>
+    </section>
+
+    <!-- Семестры: галетный переключатель -->
+    <section class="sem" id="semesters">
+      <header class="sec-head">
+        <p class="label">§ 01 · Навигация</p>
+        <h2 class="sec-title">Поверни на свой семестр</h2>
+      </header>
+
+      <div class="sem__grid">
+        <div class="switch">
+          <div class="switch__dial" role="slider" tabindex="0" aria-label="Семестр" aria-valuemin="1" aria-valuemax="11" aria-valuenow="3">
+            <svg viewBox="0 0 320 320" aria-hidden="true">
+              <defs>
+                <radialGradient id="knob" cx="40%" cy="35%" r="70%">
+                  <stop offset="0" stop-color="#3a3d44"/>
+                  <stop offset="1" stop-color="#121418"/>
+                </radialGradient>
+              </defs>
+              <g class="switch__ticks"></g>
+              <circle cx="160" cy="160" r="92" class="switch__ring"/>
+              <g class="switch__knob">
+                <circle cx="160" cy="160" r="78" fill="url(#knob)"/>
+                <g class="switch__grip"></g>
+                <rect x="156" y="88" width="8" height="40" rx="4" class="switch__pointer"/>
+              </g>
+            </svg>
+          </div>
+          <div class="switch__readout">
+            <span class="label">Курс</span><b data-out-course>2</b>
+            <span class="label">Семестр</span><b data-out-sem>3</b>
+          </div>
+        </div>
+
+        <div class="subjects">
+          <div class="chips" role="group" aria-label="Когда нужно">
+            <button class="chip is-on" type="button" data-section="all">Всё</button>
+            <button class="chip" type="button" data-section="В семестре">В семестре</button>
+            <button class="chip" type="button" data-section="Сессия">Сессия</button>
+          </div>
+          <ul class="subjects__list" aria-live="polite"><li class="subjects__empty">Загружаю каталог…</li></ul>
+        </div>
+      </div>
+
+      <div class="collections" data-collections hidden>
+        <p class="label">Отдельные подборки</p>
+        <div class="collections__row"></div>
+      </div>
+    </section>
+
+    <!-- Популярное: штампы ГОСТ -->
+    <section class="fresh" id="top-subjects">
+      <header class="sec-head sec-head--row">
+        <div>
+          <p class="label">§ 02 · Больше всего материалов</p>
+          <h2 class="sec-title">Популярные предметы</h2>
+        </div>
+        <a class="btn btn--ghost" href="#semesters">Все семестры →</a>
+      </header>
+      <div class="stamps"></div>
+    </section>
+
+    <!-- Типы работ -->
+    <section class="types" id="types">
+      <header class="sec-head">
+        <p class="label">§ 03 · Что внутри</p>
+        <h2 class="sec-title">Типы работ</h2>
+      </header>
+      <div class="types__grid"></div>
+    </section>
+
+    <!-- Прислать работу: цепь с лампой -->
+    <section class="upload" id="upload">
+      <div class="upload__text">
+        <p class="label">§ 04 · Замкни цепь</p>
+        <h2 class="sec-title">Сдал? Пришли<br>свой вариант</h2>
+        <p>Пришли PDF, фото или архив и укажи предмет и семестр. Мы проверим и добавим в архив. Перед отправкой закрой на титульнике свою фамилию, если не хочешь, чтобы её видели.</p>
+      </div>
+      <div class="circuit">
+        <svg class="circuit__svg" viewBox="0 0 600 260" aria-hidden="true">
+          <path class="wire" d="M40 200 V60 H250 M330 60 H560 V200 H40"/>
+          <path class="wire wire--live" d="M40 200 V60 H250 M330 60 H560 V200 H40"/>
+          <circle cx="250" cy="60" r="6" class="node"/>
+          <circle cx="330" cy="60" r="6" class="node"/>
+          <line class="knife" x1="250" y1="60" x2="322" y2="22"/>
+          <g transform="translate(40 130)"><line x1="-18" y1="-8" x2="18" y2="-8" class="cell"/><line x1="-10" y1="6" x2="10" y2="6" class="cell"/></g>
+          <g class="lamp" transform="translate(560 130)">
+            <circle r="26" class="lamp__glow"/>
+            <circle r="18" class="lamp__bulb"/>
+            <path d="M-12 -12 L12 12 M12 -12 L-12 12" class="lamp__x"/>
+          </g>
+          <text x="40" y="240" class="circuit__t">E = 5 В</text>
+          <text x="520" y="240" class="circuit__t">HL1</text>
+        </svg>
+        <a class="drop" data-upload href="rules.html#send" target="_blank" rel="noopener">
+          <span class="drop__icon">⤓</span>
+          <b>Отправить работу</b>
+          <span data-upload-note>Форма откроется в новой вкладке</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Панель с файлами предмета / результатами поиска -->
+  <div class="drawer" data-drawer hidden>
+    <div class="drawer__veil" data-close></div>
+    <aside class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <header class="drawer__head">
+        <div>
+          <p class="label" data-drawer-kicker></p>
+          <h2 id="drawer-title" class="drawer__title" data-drawer-title></h2>
+        </div>
+        <button class="drawer__x" type="button" data-close aria-label="Закрыть">✕</button>
+      </header>
+      <div class="drawer__tools">
+        <input type="search" data-drawer-filter placeholder="Фильтр по названию…" aria-label="Фильтр файлов">
+        <div class="drawer__types" data-drawer-types></div>
+      </div>
+      <div class="drawer__body" data-drawer-body></div>
+      <footer class="drawer__foot" data-drawer-foot></footer>
+    </aside>
+  </div>
+
+  <footer class="foot">
+    <div class="tape" aria-hidden="true"><div class="tape__track"></div></div>
+    <div class="foot__row">
+      <a class="logo" href="#top"><svg class="logo__fish" viewBox="0 0 40 20" aria-hidden="true"><path d="M2 10 C10 0 24 0 30 10 C24 20 10 20 2 10 Z M30 10 L38 3 L36 10 L38 17 Z"/><circle cx="10" cy="9" r="1.6"/></svg><span>mpei<b>.</b>fish</span></a>
+      <p class="foot__note">Неофициальный студенческий архив, не связан с НИУ «МЭИ». Материалы для самопроверки: сначала реши сам, потом сверься. Сайт не собирает персональные данные и не использует трекеры.</p>
+      <nav class="foot__links" aria-label="Документы">
+        <a href="rules.html">Правила</a>
+        <a href="rules.html#rights">Правообладателям</a>
+        <a href="rules.html#privacy">Конфиденциальность</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="config.js?v=4"></script>
+  <script src="vendor/gsap.min.js"></script>
+  <script src="main.js?v=5"></script>
+</body>
+</html>
